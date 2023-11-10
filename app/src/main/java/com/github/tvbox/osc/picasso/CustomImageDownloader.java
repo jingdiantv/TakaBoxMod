@@ -10,6 +10,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 
 public class CustomImageDownloader implements Downloader {
     final OkHttpClient client;
@@ -27,7 +28,10 @@ public class CustomImageDownloader implements Downloader {
         String cookie = null;
         String referer = null;
         String userAgent = null;
-        if (url.contains("@Headers=")) header = url.split("@Headers=")[1].split("@")[0];
+        if (url.contains("@Headers=")){
+            header =url.split("@Headers=")[1].split("@")[0];
+            header =URLDecoder.decode(header,"UTF-8");
+        }
         if (url.contains("@Cookie=")) cookie = url.split("@Cookie=")[1].split("@")[0];
         if (url.contains("@Referer=")) referer = url.split("@Referer=")[1].split("@")[0];
         if (url.contains("@User-Agent=")) userAgent = url.split("@User-Agent=")[1].split("@")[0];
@@ -48,11 +52,26 @@ public class CustomImageDownloader implements Downloader {
                 builder.addHeader(key, val);
             }
         } else {
-            if (!TextUtils.isEmpty(cookie)) builder.addHeader("Cookie", cookie);
-            if (!TextUtils.isEmpty(referer)) builder.addHeader("Referer", referer);
-            if (!TextUtils.isEmpty(userAgent)) builder.addHeader("User-Agent", userAgent);
+            if(!TextUtils.isEmpty(cookie)) {
+                assert cookie != null;
+                builder.addHeader("Cookie", cookie);
+            }
+            if(!TextUtils.isEmpty(userAgent)){
+                assert userAgent != null;
+                builder.addHeader("User-Agent", userAgent);
+            }else {
+                builder.addHeader("User-Agent", UA.random());
+            }
+            if(!TextUtils.isEmpty(referer)){
+                assert referer != null;
+                builder.addHeader("Referer", referer);
+            }
         }
         return client.newCall(builder.url(url).build()).execute();
+    }
+    
+    private static String removeDuplicateSlashes(String paramValue) {
+        return paramValue.replaceAll("//", "/");
     }
 
     @Override

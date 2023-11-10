@@ -44,6 +44,7 @@
     <string name="det_type">类型</string>
     <string name="det_actor">演员</string>
     <string name="det_dir">导演</string>
+    <string name="det_tvPlayUrl">播放地址</string>
     <string name="det_des"></string>
 
     // Settings Menu Page //

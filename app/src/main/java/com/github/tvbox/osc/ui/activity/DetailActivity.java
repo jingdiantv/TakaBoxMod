@@ -106,6 +106,7 @@ public class DetailActivity extends BaseActivity {
     private TextView tvType;
     private TextView tvActor;
     private TextView tvDirector;
+    private TextView tvPlayUrl;
     private TextView tvDes;
     private TextView tvPlay;
     private TextView tvSort;
@@ -133,7 +134,7 @@ public class DetailActivity extends BaseActivity {
     private static final int PIP_BOARDCAST_ACTION_PLAYPAUSE = 1;
     private static final int PIP_BOARDCAST_ACTION_NEXT = 2;
 
-    private ImageView tvPlayUrl;
+    // private ImageView tvPlayUrl;
 
     @Override
     protected int getLayoutResID() {
@@ -164,13 +165,13 @@ public class DetailActivity extends BaseActivity {
         tvType = findViewById(R.id.tvType);
         tvActor = findViewById(R.id.tvActor);
         tvDirector = findViewById(R.id.tvDirector);
+        tvPlayUrl = findViewById(R.id.tvPlayUrl);
         tvDes = findViewById(R.id.tvDes);
         tvPlay = findViewById(R.id.tvPlay);
         tvSort = findViewById(R.id.tvSort);
         tvPush = findViewById(R.id.tvPush);
         tvCollect = findViewById(R.id.tvCollect);
         tvQuickSearch = findViewById(R.id.tvQuickSearch);
-        tvPlayUrl = findViewById(R.id.tvPlayUrl);
         mEmptyPlayList = findViewById(R.id.mEmptyPlaylist);
         mGridView = findViewById(R.id.mGridView);
         mGridView.setHasFixedSize(false);
@@ -194,6 +195,9 @@ public class DetailActivity extends BaseActivity {
             tvPlay.setVisibility(View.VISIBLE);
             tvPlay.requestFocus();
         }
+        //禁用播放地址焦点
+        tvPlayUrl.setFocusable(false);
+        
         tvSort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -402,6 +406,7 @@ public class DetailActivity extends BaseActivity {
     private void jumpToPlay() {
         if (vodInfo != null && vodInfo.seriesMap.get(vodInfo.playFlag).size() > 0) {
             preFlag = vodInfo.playFlag;
+            setTextShow(tvPlayUrl, getString(R.string.det_tvPlayUrl), vodInfo.seriesMap.get(vodInfo.playFlag).get(vodInfo.playIndex).url);
             Bundle bundle = new Bundle();
             //保存历史
             insertVod(firstsourceKey, vodInfo);
@@ -573,7 +578,8 @@ public class DetailActivity extends BaseActivity {
                             } else
                                 flag.selected = false;
                         }
-
+                        
+                        setTextShow(tvPlayUrl, getString(R.string.det_tvPlayUrl), vodInfo.seriesMap.get(vodInfo.playFlag).get(0).url);
                         seriesFlagAdapter.setNewData(vodInfo.seriesFlags);
                         mGridViewFlag.scrollToPosition(flagScrollTo);
 

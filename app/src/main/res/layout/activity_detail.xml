@@ -141,6 +141,15 @@
                     android:singleLine="true"
                     android:textColor="@color/color_FFFFFF_80"
                     android:textSize="@dimen/ts_18" />
+                <TextView
+                    android:id="@+id/tvPlayUrl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/vs_5"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:textColor="@color/color_FFFFFF_80"
+                    android:textSize="@dimen/ts_18" />
 
                 <TextView
                     android:id="@+id/tvDes"
@@ -148,7 +157,7 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:lineSpacingMultiplier="1.1"
-                    android:maxLines="4"
+                    android:maxLines="3"
                     android:textColor="@color/color_FFFFFF_80"
                     android:textSize="@dimen/ts_16" />
 
@@ -224,16 +233,6 @@
                         android:text="@string/det_fav"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/vs_20" />
-
-                    <ImageView
-                        android:id="@+id/tvPlayUrl"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="@dimen/vs_15"
-                        android:layout_marginLeft="@dimen/vs_15"
-                        android:focusable="false"
-                        app:srcCompat="@drawable/button_detail_link" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
