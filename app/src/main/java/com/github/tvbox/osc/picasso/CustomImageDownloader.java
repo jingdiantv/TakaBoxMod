@@ -49,7 +49,7 @@ public class CustomImageDownloader implements Downloader {
             JsonObject jsonInfo = new Gson().fromJson(header, JsonObject.class);
             for (String key : jsonInfo.keySet()) {
                 String val = jsonInfo.get(key).getAsString();
-                builder.addHeader(key, val);
+                builder.addHeader(key.toUpperCase(), removeDuplicateSlashes(val));
             }
         } else {
             if(!TextUtils.isEmpty(cookie)) {
@@ -60,7 +60,8 @@ public class CustomImageDownloader implements Downloader {
                 assert userAgent != null;
                 builder.addHeader("User-Agent", userAgent);
             }else {
-                builder.addHeader("User-Agent", UA.random());
+                String mobile_UA = "Dalvik/2.1.0 (Linux; U; Android 13; M2102J2SC Build/TKQ1.220829.002)";
+                builder.addHeader("User-Agent", mobile_UA);
             }
             if(!TextUtils.isEmpty(referer)){
                 assert referer != null;
