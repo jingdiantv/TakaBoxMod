@@ -22,8 +22,7 @@ public class CustomImageDownloader implements Downloader {
     @Override
     public Response load(Request request) throws IOException {
         String url = request.url().toString();
-        Request.Builder builder = request.newBuilder();
-
+        
         String header = null;
         String cookie = null;
         String referer = null;
@@ -35,7 +34,9 @@ public class CustomImageDownloader implements Downloader {
         if (url.contains("@Cookie=")) cookie = url.split("@Cookie=")[1].split("@")[0];
         if (url.contains("@Referer=")) referer = url.split("@Referer=")[1].split("@")[0];
         if (url.contains("@User-Agent=")) userAgent = url.split("@User-Agent=")[1].split("@")[0];
-
+        
+        url = url.split("@")[0];
+        Request.Builder builder = request.newBuilder().url(url);
         // takagen99 : Shift Douban referer to here instead
         if (url.contains("douban")) {
             userAgent = UA.random();
@@ -44,7 +45,6 @@ public class CustomImageDownloader implements Downloader {
             builder.addHeader("Referer", referer);
         }
 
-        url = url.split("@")[0];
         if (!TextUtils.isEmpty(header)) {
             JsonObject jsonInfo = new Gson().fromJson(header, JsonObject.class);
             for (String key : jsonInfo.keySet()) {
@@ -68,7 +68,7 @@ public class CustomImageDownloader implements Downloader {
                 builder.addHeader("Referer", referer);
             }
         }
-        return client.newCall(builder.url(url).build()).execute();
+        return client.newCall(builder.build()).execute();
     }
     
     private static String removeDuplicateSlashes(String paramValue) {
