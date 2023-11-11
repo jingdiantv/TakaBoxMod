@@ -81,11 +81,7 @@ public class VodInfo implements Serializable {
                 if (urlInfo.beanList != null && urlInfo.beanList.size() > 0) {
                     List<VodSeries> seriesList = new ArrayList<>();
                     for (Movie.Video.UrlBean.UrlInfo.InfoBean infoBean : urlInfo.beanList) {
-                        if(!TextUtils.isEmpty(name)) {
-                            seriesList.add(new VodSeries(infoBean.name.replace(name, ""), infoBean.url));
-                        } else {
-                            seriesList.add(new VodSeries(infoBean.name, infoBean.url));
-                        }
+                        seriesList.add(new VodSeries(infoBean.name, infoBean.url));
                     }
                     tempSeriesMap.put(urlInfo.flag, seriesList);
                     seriesFlags.add(new VodSeriesFlag(urlInfo.flag));
